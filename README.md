@@ -5,7 +5,8 @@ dcw is docker compose wrapper to simplify everyday dev work with containers.
 ## Installation
 
 ```shell
-curl -o /usr/local/bin/dcw -fsSL https://github.com/rezzza/dcw/raw/master/dcw && chmod a+x /usr/local/bin/dcw
+curl -o /usr/local/bin/dcw -fsSL https://github.com/rezzza/dcw/raw/master/dcw \
+&& chmod a+x /usr/local/bin/dcw
 ```
 
 ## Usage
