@@ -11,7 +11,7 @@ curl -o /usr/local/bin/dcw -fsSL https://github.com/rezzza/dcw/raw/master/dcw \
 
 ## Usage
 
-```shell
+```
 
 Usage: dcw [OPTIONS] CMD
 
