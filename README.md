@@ -1,5 +1,7 @@
 # dcw
 
+[![Build Status](https://travis-ci.org/rezzza/dcw.svg?branch=master)](https://travis-ci.org/rezzza/dcw)
+
 dcw is docker compose wrapper to simplify everyday dev work with containers.
 
 ## Installation
