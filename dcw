@@ -9,7 +9,7 @@ cat <<EOF
 You need to install gnu-getopt to run this program.
 
 If you run this programm on OSX, try:
-    $ brew install gnu-getopt && brew link gnu-getopt
+    $ brew install gnu-getopt && brew link gnu-getopt --force
 
 EOF
     exit 100;
