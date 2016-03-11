@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+DCW_RELEASE="1.0.0"
+
+getopt -T &> /dev/null
+if [ $? -eq 0 ]
+then
+cat <<EOF
+
+You need to install gnu-getopt to run this program.
+
+If you run this programm on OSX, try:
+    $ brew install gnu-getopt && brew link gnu-getopt
+
+EOF
+    exit 100;
+fi
+
+TEMP=$(getopt -o f:,s:,p,r:,h,v,d,V -l file:,service:,service-ports,run-options:,help,verbose,dry-run,version -n "dcw" -- "$@")
+
+function usage
+{
+cat <<EOF
+
+Usage: dcw [OPTIONS] CMD
+
+  A docker compose wrapper to simplify everyday dev work with containers
+
+    -f, --file             Path to the docker compose file
+    -s, --service          Name of docker compose service to run
+    -p, --service-ports    Run command with the service's ports enabled and mapped
+    -r, --run-options      Extra docker-compose run options (quote them)
+    -h, --help             Display this usage description
+    -v, --verbose          Display executed docker-compose command
+    -d, --dry-run          Display docker-compose command aims to be executed
+    -V, --version          Return dcw version
+
+  You can also configure following environment variables, either putting then
+  into a .dcw file in the current execution path of the command OR by
+  exporting them.
+
+    DCW_COMPOSE_FILE_PATH
+    DCW_COMPOSE_DEFAULT_RUN_OPTIONS
+    DCW_COMPOSE_SERVICE
+
+  Most useful use cases examples:
+
+    Run a simple command
+    $ dcw ls /
+
+    Run a command with some options
+    $ dcw -- ls -lha /
+
+    Run a command on a service wich need to bind ports
+    $ dcw -p npm start /
+EOF
+}
+
+if [ $? != 0 ]
+then
+    usage && exit 1
+fi
+
+DCW_CONFIG_FILE_PATH=$(pwd)/.dcw
+if [ -f $DCW_CONFIG_FILE_PATH ]
+then
+    source $DCW_CONFIG_FILE_PATH
+fi
+
+eval set -- "$TEMP"
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        -f|--file)          DCW_COMPOSE_FILE_PATH=$2; shift 2 ;;
+        -s|--service)       DCW_COMPOSE_SERVICE=$2; shift 2 ;;
+        -p|--service-ports) DCW_COMPOSE_RUN_OPTIONS="$DCW_COMPOSE_RUN_OPTIONS --service-ports"; shift ;;
+        -r|--run-options)   DCW_COMPOSE_RUN_OPTIONS="$DCW_COMPOSE_RUN_OPTIONS $2"; shift 2 ;;
+        -h|--help)          usage && exit 0 ;;
+        -v|--verbose)       DCW_VERBOSE_MODE="yes"; shift ;;
+        -d|--dry-run)       DCW_DRYRUN_MODE="yes"; shift ;;
+        -V|--version)       echo "dcw $DCW_RELEASE" && exit 0;;
+        -- )                shift; break ;;
+        *)                  break ;;
+    esac
+done
+
+if [ $# -eq 0 ]
+then
+    usage && exit 2
+fi
+
+if [ "$DCW_COMPOSE_SERVICE" = "" ]
+then
+    usage && exit 3
+fi
+
+if [ "$DCW_COMPOSE_FILE_PATH" = "" ]
+then
+    usage && exit 4
+fi
+
+DCW_COMPOSE_RUN_OPTIONS="$DCW_COMPOSE_DEFAULT_RUN_OPTIONS $DCW_COMPOSE_RUN_OPTIONS"
+CMD="docker-compose --file $DCW_COMPOSE_FILE_PATH run $DCW_COMPOSE_RUN_OPTIONS $DCW_COMPOSE_SERVICE $@"
+if [[ "$DCW_VERBOSE_MODE" = "yes" || "$DCW_DRYRUN_MODE" = "yes" ]]
+then
+    echo $CMD
+fi
+
+if [ "$DCW_DRYRUN_MODE" != "yes" ]
+then
+    $CMD
+fi
