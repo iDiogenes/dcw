@@ -48,7 +48,7 @@ Usage: dcw [OPTIONS] CMD
     Run a command with some options
     $ dcw -- ls -lha /
 
-    Run a command on a service wich need to bind ports
+    Run a command on a service which need to bind ports
     $ dcw -p npm start /
 
 ```
