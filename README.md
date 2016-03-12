@@ -3,6 +3,20 @@
 
 dcw is **D**ocker **C**ompose **W**rapper to simplify everyday dev work with containers.
 
+## Why dcw?
+
+To sum up, do you prefer to run this kind of command when you localy develop some service on your local machine:
+
+```shell
+docker-compose --file  @path/to/your/docker-compose.yml run --no-deps --service-ports \
+--rm my-service my-service-command
+```
+
+or simply use this shorthand syntax:
+```shell
+dcw -p my-service-command
+```
+
 ## Requirements
 
 [![dcw logo](engine.png) Docker Engine](https://www.docker.com/products/docker-engine)
