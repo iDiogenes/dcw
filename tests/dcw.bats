@@ -79,6 +79,21 @@ EOF
     [ "$status" -eq 0 ]
     [ "$output" = "docker-compose --file tests/fixtures/docker-compose.yml run --rm app echo \"hello\"" ]
 
+    # .dcw service override with corresponding option
+    run dcw -d -s foo echo \"hello\"
+    [ "$status" -eq 0 ]
+    [ "$output" = "docker-compose --file tests/fixtures/docker-compose.yml run --rm foo echo \"hello\"" ]
+
+    # .dcw docker compose file path override with corresponding option
+    run dcw -d -f tmp/docker-compose.yml echo \"hello\"
+    [ "$status" -eq 0 ]
+    [ "$output" = "docker-compose --file tmp/docker-compose.yml run --rm app echo \"hello\"" ]
+
+    # .dcw docker compose default run options not overrided with --run-option option
+    run dcw -d -r "--no-deps" echo \"hello\"
+    [ "$status" -eq 0 ]
+    [ "$output" = "docker-compose --file tests/fixtures/docker-compose.yml run --rm --no-deps app echo \"hello\"" ]
+
     # command with some options
     run dcw -d -- ls -lha /
     [ "$status" -eq 0 ]
