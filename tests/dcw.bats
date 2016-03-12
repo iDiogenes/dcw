@@ -118,14 +118,14 @@ EOF
 }
 
 # DOCKER INTEGRATION
-#@test "it should display 'hello' when running printf 'hello' command" {
-#    #skip
-#cat > .dcw <<EOF
-#DCW_COMPOSE_SERVICE=app
-#DCW_COMPOSE_FILE_PATH=tests/fixtures/docker-compose.yml
-#DCW_COMPOSE_DEFAULT_RUN_OPTIONS="--rm"
-#EOF
-#    run dcw printf hello
-#    [ "$status" -eq 0 ]
-#    [ "${lines[0]}" = "hello" ]
-#}
+@test "it should display 'hello' when running printf 'hello' command" {
+    #skip
+cat > .dcw <<EOF
+DCW_COMPOSE_SERVICE=app
+DCW_COMPOSE_FILE_PATH=tests/fixtures/docker-compose.yml
+DCW_COMPOSE_DEFAULT_RUN_OPTIONS="--rm"
+EOF
+    run dcw printf hello
+    [ "$status" -eq 0 ]
+    [ "${lines[0]}" = "hello" ]
+}
