@@ -1,8 +1,12 @@
-# dcw
+# dcw ![dcw logo](dcw.png) [![Build Status](https://travis-ci.org/rezzza/dcw.svg?branch=master)](https://travis-ci.org/rezzza/dcw)
 
-[![Build Status](https://travis-ci.org/rezzza/dcw.svg?branch=master)](https://travis-ci.org/rezzza/dcw)
 
-dcw is docker compose wrapper to simplify everyday dev work with containers.
+dcw is **D**ocker **C**ompose **W**rapper to simplify everyday dev work with containers.
+
+## Requirements
+
+[![dcw logo](engine.png) Docker Engine](https://www.docker.com/products/docker-engine)
+[![dcw logo](compose.png) Docker Compose](https://www.docker.com/products/docker-compose)
 
 ## Installation
 
