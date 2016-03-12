@@ -2,7 +2,7 @@
 DCW_RELEASE="1.0.0"
 
 getopt -T &> /dev/null
-if [ $? -eq 0 ]
+if [ "$?" -eq 0 ]
 then
 cat <<EOF
 
@@ -55,15 +55,15 @@ Usage: dcw [OPTIONS] CMD
 EOF
 }
 
-if [ $? != 0 ]
+if [ "$?" -ne 0 ]
 then
     usage && exit 1
 fi
 
 DCW_CONFIG_FILE_PATH=$(pwd)/.dcw
-if [ -f $DCW_CONFIG_FILE_PATH ]
+if [ -f "$DCW_CONFIG_FILE_PATH" ]
 then
-    source $DCW_CONFIG_FILE_PATH
+    source "$DCW_CONFIG_FILE_PATH"
 fi
 
 eval set -- "$TEMP"
@@ -83,29 +83,29 @@ do
     esac
 done
 
-if [ $# -eq 0 ]
+if [ "$#" -eq 0 ]
 then
     usage && exit 2
 fi
 
-if [ "$DCW_COMPOSE_SERVICE" = "" ]
+if [ -z "$DCW_COMPOSE_SERVICE" ]
 then
     usage && exit 3
 fi
 
-if [ "$DCW_COMPOSE_FILE_PATH" = "" ]
+if [ -z "$DCW_COMPOSE_FILE_PATH" ]
 then
     usage && exit 4
 fi
 
-DCW_COMPOSE_RUN_OPTIONS="$DCW_COMPOSE_DEFAULT_RUN_OPTIONS $DCW_COMPOSE_RUN_OPTIONS"
-CMD="docker-compose --file $DCW_COMPOSE_FILE_PATH run $DCW_COMPOSE_RUN_OPTIONS $DCW_COMPOSE_SERVICE $@"
+DCW_COMPOSE_RUN_OPTIONS=($DCW_COMPOSE_DEFAULT_RUN_OPTIONS $DCW_COMPOSE_RUN_OPTIONS)
+CMD=(docker-compose --file "$DCW_COMPOSE_FILE_PATH" run "${DCW_COMPOSE_RUN_OPTIONS[@]}" "$DCW_COMPOSE_SERVICE" "$@")
 if [[ "$DCW_VERBOSE_MODE" = "yes" || "$DCW_DRYRUN_MODE" = "yes" ]]
 then
-    echo $CMD
+    printf '%s\n' "${CMD[*]}"
 fi
 
 if [ "$DCW_DRYRUN_MODE" != "yes" ]
 then
-    $CMD
+    "${CMD[@]}"
 fi
