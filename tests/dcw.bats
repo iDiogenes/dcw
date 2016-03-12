@@ -31,11 +31,11 @@ teardown() {
 @test "it should display version when running with --version or -V option" {
     run dcw --version
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "dcw 1.0.0" ]
+    [ "${lines[0]}" = "dcw 1.0.3" ]
 
     run dcw -V
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "dcw 1.0.0" ]
+    [ "${lines[0]}" = "dcw 1.0.3" ]
 }
 
 @test "it should display help when running with --help or -h option" {
