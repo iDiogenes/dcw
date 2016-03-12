@@ -8,7 +8,7 @@ dcw is **D**ocker **C**ompose **W**rapper to simplify everyday dev work with con
 To sum up, do you prefer to run this kind of command when you localy develop some service on your local machine:
 
 ```shell
-docker-compose --file  @path/to/your/docker-compose.yml run --no-deps --service-ports \
+docker-compose --file path/to/your/docker-compose.yml run --no-deps --service-ports \
 --rm my-service my-service-command
 ```
 
