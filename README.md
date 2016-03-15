@@ -33,7 +33,7 @@ curl -o /usr/local/bin/dcw -fsSL https://github.com/rezzza/dcw/raw/master/dcw \
 
 ```
 
-Usage: dcw [OPTIONS] CMD
+Usage: dcw [OPTIONS] [CMD]
 
   A docker compose wrapper to simplify everyday dev work with containers
 
