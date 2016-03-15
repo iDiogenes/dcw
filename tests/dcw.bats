@@ -9,9 +9,9 @@ teardown() {
     rm -f .dcw
 }
 
-@test "it should fail when running without any command" {
+@test "it should not fail when running without any command & option" {
     run dcw
-    [ "$status" -eq 2 ]
+    [ "$status" -eq 3 ]
 }
 
 @test "it should fail when running a command without any option" {
@@ -31,29 +31,29 @@ teardown() {
 @test "it should display version when running with --version or -V option" {
     run dcw --version
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "dcw 1.0.3" ]
+    [ "${lines[0]}" = "dcw 1.1.0" ]
 
     run dcw -V
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "dcw 1.0.3" ]
+    [ "${lines[0]}" = "dcw 1.1.0" ]
 }
 
 @test "it should display help when running with --help or -h option" {
     run dcw --help
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "Usage: dcw [OPTIONS] CMD" ]
+    [ "${lines[0]}" = "Usage: dcw [OPTIONS] [CMD]" ]
 
     run dcw -h
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "Usage: dcw [OPTIONS] CMD" ]
+    [ "${lines[0]}" = "Usage: dcw [OPTIONS] [CMD]" ]
 
     run dcw --help -s app
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "Usage: dcw [OPTIONS] CMD" ]
+    [ "${lines[0]}" = "Usage: dcw [OPTIONS] [CMD]" ]
 
     run dcw -h -s app -f tests/fixtures/docker-compose.yml ls /
     [ "$status" -eq 0 ]
-    [ "${lines[0]}" = "Usage: dcw [OPTIONS] CMD" ]
+    [ "${lines[0]}" = "Usage: dcw [OPTIONS] [CMD]" ]
 }
 
 @test "it should fail when running a command only with service option" {

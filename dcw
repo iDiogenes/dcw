@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DCW_RELEASE="1.0.3"
+DCW_RELEASE="1.1.0"
 
 getopt -T &> /dev/null
 if [ "$?" -eq 0 ]
@@ -21,7 +21,7 @@ function usage
 {
 cat <<EOF
 
-Usage: dcw [OPTIONS] CMD
+Usage: dcw [OPTIONS] [CMD]
 
   A docker compose wrapper to simplify everyday dev work with containers
 
@@ -50,7 +50,7 @@ Usage: dcw [OPTIONS] CMD
     Run a command with some options
     $ dcw -- ls -lha /
 
-    Run a command on a service wich need to bind ports
+    Run a command on a service which need to bind ports
     $ dcw -p npm start /
 EOF
 }
@@ -82,11 +82,6 @@ do
         *)                  break ;;
     esac
 done
-
-if [ "$#" -eq 0 ]
-then
-    usage && exit 2
-fi
 
 if [ -z "$DCW_COMPOSE_SERVICE" ]
 then
